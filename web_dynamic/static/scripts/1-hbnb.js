@@ -1,26 +1,16 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const amenities = {};
-
-    function handleCheckboxChange(event) {
-        const checkbox = event.target;
-
-        if (checkbox.checked) {
-            amenities[checkbox.dataset.id] = checkbox.dataset.name;
-        } else {
-            delete amenities[checkbox.dataset.id];
-        }
-
-        const amenitiesList = Object.values(amenities);
-
-        const amenitiesHeader = document.querySelector('div.amenities > h4');
-        amenitiesHeader.textContent = amenitiesList.length > 0 ? amenitiesList.join(", ") : "\u00A0"; // &nbsp;
-
-        console.log(amenities);
+window.addEventListener('load', function () {
+  // task 2
+  const amenityIds = {};
+  $('input[type=checkbox]').change(function () {
+    if ($(this).prop('checked')) {
+      amenityIds[$(this).attr('data-id')] = $(this).attr('data-name');
+    } else if (!$(this).prop('checked')) {
+      delete amenityIds[$(this).attr('data-id')];
     }
-
-    // Attach change event listener to all checkboxes
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener('change', handleCheckboxChange);
-    });
+    if (Object.keys(amenityIds).length === 0) {
+      $('div.amenities h4').html('&nbsp');
+    } else {
+      $('div.amenities h4').text(Object.values(amenityIds).join(', '));
+    }
+  });
 });
